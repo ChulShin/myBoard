@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<!-- dataSource 에서 db connection과 관련된 정보 분리 -->
+	<!-- util 태그의 id가 하기의 bean 태그에 사용된다! -->
+	<!-- class path 설정에 주의한다! -->
+	<util:properties id="dataSourceConfig" location="classpath:db-connection.properties"/>
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 오라클 접속 -->
+    <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+        <property value="#{dataSourceConfig['driverClassName']}" name="driverClassName"/>
+        <property value="#{dataSourceConfig['url']}" name="url"/>
+        <property value="#{dataSourceConfig['username']}" name="username"/>
+        <property value="#{dataSourceConfig['password']}" name="password"/>
+    </bean>
+   
+    <!-- 마이바티스 연동 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+         <property name="dataSource" ref="dataSource"></property>
+         <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+         <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"/>
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+    </bean>
+    
+	<!-- 패키지 -->
+	<context:component-scan base-package="com.chuls.domain" />
+	<context:component-scan base-package="com.chuls.persistence" />
+	<context:component-scan base-package="com.chuls.service" />
+    
+</beans>

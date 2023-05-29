@@ -47,5 +47,10 @@ public class MemberDAOImpl implements MemberDAO{
 	public MemberVO idCheck(String userId) throws Exception {
 		return sql.selectOne(namespace + ".idCheck", userId);
 	}
-	
+
+	// 닉네임 확인
+	@Override
+	public MemberVO userNameCheck(String userName) throws Exception {
+		return sql.selectOne(namespace + ".userNameCheck", userName);
+	}
 }

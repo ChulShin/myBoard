@@ -8,15 +8,11 @@
 	<!-- 제이쿼리 -->
 	<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 	
-	<!-- 합쳐지고 최소화된 최신 CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<!-- Bootstrap CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	
-	<!-- 부가적인 테마 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	
-	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/read.css">
 </head>
 <body>
 
@@ -29,7 +25,7 @@
 
 	<section id="container">
 	   
-		<form role="form" method="post" autocomplete="off">
+		<form role="form" method="post" autocomplete="off" style="margin: 0;">
 	    	
 	    	<input type="hidden" id="page" name="page" value="${scri.page}" readonly="readonly"/>
 	    	<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}" readonly="readonly"/>
@@ -62,8 +58,10 @@
 			</div>
 			<div class="form-group">
 				<button type="button" id="list_btn" class="btn btn-primary">목록</button>
-				<button type="button" id="modity_btn" class="btn btn-warning">수정</button>
-				<button type="button" id="delete_btn" class="btn btn-danger">삭제</button>
+				<c:if test="${msg != 'hide_modity_delete_btn'}">
+					<button type="button" id="modity_btn" class="btn btn-warning">수정</button>
+					<button type="button" id="delete_btn" class="btn btn-danger">삭제</button>
+				</c:if>
 				
 				<script>
 	   
@@ -148,21 +146,21 @@
 					<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}" readonly="readonly" />
 					<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}" readonly="readonly" />
 				
-					<div class="form-group">
+					<div class="form-group write-comment">
 						<label for="writer" class="col-sm-2 control-label">작성자</label>
 						<div class="col-sm-10">
 							<input type="text" id="writer" name="writer" class="form-control" />
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<div class="form-group write-comment">
 						<label for="content" class="col-sm-2 control-label">댓글 내용</label>
 						<div class="col-sm-10">
 							<textarea id="content" name="content" class="form-control"></textarea>
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<div class="form-group write-comment">
 						<div class="col-sm-offset-2 col-sm-10">
 							<button type="button" class="repSubmit btn btn-success">작성</button>
 						</div>
@@ -186,6 +184,7 @@
 	</footer>
 
 </div>
-
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -42,5 +42,11 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO idCheck(String userId) throws Exception {
 		return dao.idCheck(userId);
 	}
+
+	// 닉네임 확인
+	@Override
+	public MemberVO userNameCheck(String userName) throws Exception {
+		return dao.userNameCheck(userName);
+	}
 	
 }

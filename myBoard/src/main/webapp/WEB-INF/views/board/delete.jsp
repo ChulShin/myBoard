@@ -8,10 +8,13 @@
 	<!-- 제이쿼리 -->
 	<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 	
+	<!-- Bootstrap CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	
 </head>
 <body>
 
-<div id="root">
+<div id="root" class="container">
 	<header>
 		<%@include file="include/header.jsp" %>
 	</header>
@@ -22,18 +25,20 @@
 	   
 		<form role="form" method="post" autocomplete="off">
 	    
-			<p>
-				<label for="bno">글 번호</label>
-				<input type="text" id="bno" name="bno" value="${delete}" readonly="readonly" />
-			</p>
-			
+			<div class="form-group">
+				<label for="bno" class="control-label">글 번호</label>
+				<div class="col-sm-2">
+					<input type="text" id="bno" name="bno" class="form-control" value="${delete}" readonly="readonly" />
+				</div>
+			</div>
+			<br>
 			<p>정말로 삭제하시겠습니까?</p>
 			
-			<p>
-			
-				<button type="submit">예, 삭제합니다.</button><br />
-				<button id="cancel_btn" type="button">아니오, 삭제하지 않습니다.</button>
-				
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-danger">예, 삭제합니다.</button>
+					<button type="button" id="cancel_btn" class="btn btn-warning">아니오, 삭제하지 않습니다.</button>
+				</div>
 				
 				<script>
 				
@@ -42,15 +47,11 @@
 				
 				// 취소 버튼 클릭
 				$("#cancel_btn").click(function(){
-					self.location = "/board/read?bno=${delete}"
-						   + "&page=${scri.page}"
-						   + "&perPageNum=${scri.perPageNum}"
-						   + "&searchType=${scri.searchType}"
-						   + "&keyword=${scri.keyword}";
+					self.location = "/board/read?bno=${delete}&page=${scri.page}&perPageNum=${scri.perPageNum}&searchType=${scri.searchType}&keyword=${scri.keyword}";
 				});
 				</script>
 			   
-			</p>
+			</div>
 			
 		</form>
 	

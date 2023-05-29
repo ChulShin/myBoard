@@ -18,4 +18,7 @@ public interface MemberService {
 	
 	// 아이디 확인
 	public MemberVO idCheck(String userId) throws Exception;
+	
+	// 닉네임 확인
+	public MemberVO userNameCheck(String userName) throws Exception;
 }

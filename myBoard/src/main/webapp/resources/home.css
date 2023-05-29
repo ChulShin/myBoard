@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+.input-form-box {
+	border: 0px solid #ff0000;
+	display: flex;
+	margin-bottom: 5px;
+}
+
+.input-form-box>label {
+	display: block;
+	text-align: left;
+	padding-top: 5px;
+	min-width: 65px;
+}

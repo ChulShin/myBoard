@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chuls.domain.BoardVO;
 import com.chuls.domain.Criteria;
+import com.chuls.domain.MemberVO;
 import com.chuls.domain.PageMaker;
 import com.chuls.domain.ReplyVO;
 import com.chuls.domain.SearchCriteria;
@@ -70,10 +71,15 @@ public class BoardController {
 	// 글 조회
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void getRead(@RequestParam("bno") int bno,
-						@ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception {
+						@ModelAttribute("scri") SearchCriteria scri, Model model, HttpSession session) throws Exception {
 		logger.info("get read");
 		
 		BoardVO vo = service.read(bno);
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		
+		if(member == null || !member.getUserName().equals(vo.getWriter())){
+			model.addAttribute("msg", "hide_modity_delete_btn");
+		}
 		model.addAttribute("read", vo);
 		model.addAttribute("scri", scri);
 		
@@ -83,34 +89,69 @@ public class BoardController {
 	
 	// 글 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public void getModify(@RequestParam("bno") int bno,
-						@ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception {
+	public String getModify(@RequestParam("bno") int bno,
+						@ModelAttribute("scri") SearchCriteria scri, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
 		logger.info("get modify");
+		
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if(member == null) {
+			return "redirect:/board/listSearch";
+		}
 		
 		BoardVO vo = service.read(bno);
 		
 		model.addAttribute("modify", vo);
+		
+		if(!member.getUserName().equals(vo.getWriter())){
+			rttr.addFlashAttribute("msg", "modify_error");
+			return "redirect:/board/listSearch";
+		}
+		
 		model.addAttribute("scri", scri);
+		
+		return "/board/modify";
 	}   
 	
 	// 글 삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public void getDelete(@RequestParam("bno") int bno,
-						@ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception {
+	public String getDelete(@RequestParam("bno") int bno,
+						@ModelAttribute("scri") SearchCriteria scri, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
 		logger.info("get delete");
+		
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if(member == null) {
+			return "redirect:/board/listSearch";
+		}
+
+		BoardVO vo = service.read(bno);
+		
+		if(!member.getUserName().equals(vo.getWriter())){
+			rttr.addFlashAttribute("msg", "delete_error");
+			return "redirect:/board/listSearch";
+		}
 		
 		model.addAttribute("delete", bno);
 		model.addAttribute("scri", scri);
+		
+		return "/board/delete";
 	}
 	
 	// 글 수정  POST   
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	@RequestMapping(value = "/modifyPOST", method = RequestMethod.POST)
 	public String postModify(BoardVO vo,
-				@ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+				@ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr, HttpSession session, Model model) throws Exception {
 		logger.info("post modify");
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		BoardVO writerCheck = service.read(vo.getBno());
 		
-		service.update(vo);
+		String writer = writerCheck.getWriter();
+		String userName = member.getUserName();
 		
+		if(userName.equals(writer)) {
+			service.update(vo);
+		} else {
+			rttr.addFlashAttribute("msg", "modify_error");
+		}
 		rttr.addAttribute("page", scri.getPage());
 		rttr.addAttribute("perPageNum", scri.getPerPageNum());
 		rttr.addAttribute("searchType", scri.getSearchType());
@@ -122,11 +163,19 @@ public class BoardController {
 	// 글 삭제  POST
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String postDelete(@RequestParam("bno") int bno,
-				@ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+				@ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr, HttpSession session, Model model) throws Exception {
 		logger.info("post delete");
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		BoardVO writerCheck = service.read(bno);
 		
-		service.delete(bno);
+		String writer = writerCheck.getWriter();
+		String userName = member.getUserName();
 		
+		if(userName.equals(writer)) {
+			service.delete(bno);
+		} else {
+			rttr.addFlashAttribute("msg", "delete_error");
+		}
 		rttr.addAttribute("page", scri.getPage());
 		rttr.addAttribute("perPageNum", scri.getPerPageNum());
 		rttr.addAttribute("searchType", scri.getSearchType());
@@ -151,9 +200,15 @@ public class BoardController {
 	
 	// 글 목록 + 페이징 + 검색
 	@RequestMapping(value = "/listSearch", method = RequestMethod.GET)
-	public void listSearch(@ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception {
+	public void listSearch(HttpSession session, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception {
 		logger.info("get list search");
 
+		Object loginInfo = session.getAttribute("member");
+		
+		if(loginInfo == null) {
+			model.addAttribute("msg", "login_error");
+		}
+		
 		List<BoardVO> list = service.listSearch(scri);
 		model.addAttribute("list", list);
 
@@ -184,7 +239,7 @@ public class BoardController {
 	@RequestMapping(value = "/replyUpdate", method = RequestMethod.POST)
 	public String replyUpdate(ReplyVO vo, SearchCriteria scri, RedirectAttributes rttr) throws Exception {
 		logger.info("reply update");
-
+		
 		RepService.replyUpdate(vo);
 
 		rttr.addAttribute("bno", vo.getBno());

@@ -6,14 +6,14 @@
    
 	<!-- 회원 가입 -->
 	<insert id="register">
-		insert into myMember(userId, userPass, userName)
-			values(#{userId}, #{userPass}, #{userName})   
+		insert into myMember(userId, userPass, userName, phoneNum, address, address_detail, intro, fileName)
+			values(#{userId}, #{userPass}, #{userName}, #{phoneNum}, #{address}, #{address_detail}, #{intro}, #{fileName})
 	</insert>
 	
 	<!-- 로그인 -->
 	<select id="login" resultType="com.chuls.domain.MemberVO">
 		select
-			userId, userName, userPass
+			userId, userPass, userName, regDate, phoneNum, address, address_detail, intro, fileName
 		from
 			myMember
 		where userId = #{userId}
@@ -41,10 +41,16 @@
 			where userId = #{userId}
 	</select>
 	
+	<!-- 닉네임 확인 -->
+	<select id="userNameCheck" resultType="com.chuls.domain.MemberVO">
+		select userName from myMember
+			where userName = #{userName}
+	</select>
+	
 	<!-- 로그인 - 암호화 적용 -->
 	<select id="loginBcrypt" resultType="com.chuls.domain.MemberVO">
 		select
-			userId, userName, userPass
+			userId, userPass, userName, regDate, phoneNum, address, address_detail, intro, fileName
 		from
 			myMember
 		where userId = #{userId}

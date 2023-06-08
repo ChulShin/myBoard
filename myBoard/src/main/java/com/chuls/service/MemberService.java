@@ -21,4 +21,7 @@ public interface MemberService {
 	
 	// 닉네임 확인
 	public MemberVO userNameCheck(String userName) throws Exception;
+	
+	// 비밀번호 확인
+	public MemberVO userPassCheck(String userId) throws Exception;
 }

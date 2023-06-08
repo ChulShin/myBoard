@@ -11,14 +11,14 @@
 	</insert>
 	
 	<!-- 로그인 -->
-	<select id="login" resultType="com.chuls.domain.MemberVO">
-		select
-			userId, userPass, userName, regDate, phoneNum, address, address_detail, intro, fileName
-		from
-			myMember
-		where userId = #{userId}
-			and userPass = #{userPass}
-	</select>
+<!-- 	<select id="login" resultType="com.chuls.domain.MemberVO"> -->
+<!-- 		select -->
+<!-- 			userId, userPass, userName, regDate, phoneNum, address, address_detail, intro, fileName -->
+<!-- 		from -->
+<!-- 			myMember -->
+<!-- 		where userId = #{userId} -->
+<!-- 			and userPass = #{userPass} -->
+<!-- 	</select> -->
 	
 	<!-- 회원정보 수정 -->   
 	<update id="modify">
@@ -50,9 +50,15 @@
 	<!-- 로그인 - 암호화 적용 -->
 	<select id="loginBcrypt" resultType="com.chuls.domain.MemberVO">
 		select
-			userId, userPass, userName, regDate, phoneNum, address, address_detail, intro, fileName
+			userId, userName, regDate, phoneNum, address, address_detail, intro, fileName
 		from
 			myMember
 		where userId = #{userId}
+	</select>
+	
+	<!-- 비밀번호 확인 -->
+	<select id="userPassCheck" resultType="com.chuls.domain.MemberVO">
+		select userPass from myMember
+			where userId = #{userId}
 	</select>
 </mapper>

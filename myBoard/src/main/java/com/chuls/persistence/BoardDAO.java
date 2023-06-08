@@ -10,6 +10,9 @@ public interface BoardDAO {
    
 	// 작성
 	public void write(BoardVO vo) throws Exception;
+	
+	// 가장 최근 작성된 게시물
+	public BoardVO lastBoard() throws Exception;
 	   
 	// 조회
 	public BoardVO read(int bno) throws Exception;

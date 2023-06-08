@@ -24,92 +24,97 @@
 	<%@include file="include/nav.jsp" %>
 
 	<section id="container">
-	   
-		<form role="form" method="post" autocomplete="off" style="margin: 0;">
-	    	
-	    	<input type="hidden" id="page" name="page" value="${scri.page}" readonly="readonly"/>
-	    	<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}" readonly="readonly"/>
-	    	<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}" readonly="readonly"/>
-	    	<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}" readonly="readonly"/>
-	    	
-	    	
-			<div class="form-group">
-				<label for="bno" class="control-label">글 번호</label>
-				<input type="text" id="bno" name="bno" class="form-control" value="${read.bno}" readonly="readonly" />
-			</div>
-			
-		</form>
-		     
-			<div class="form-group">
-				<label for="title" class="control-label">글 제목</label>
-				<input type="text" id="title" name="title" class="form-control" value="${read.title}" readonly="readonly" />
-			</div>
-			<div class="form-group">
-				<label for="content" class="control-label">글 내용</label>
-				<textarea id="content" name="content" class="form-control" readonly="readonly" >${read.content}</textarea>
-			</div>
-			<div class="form-group">
-				<label for="writer" class="control-label">작성자</label>
-				<input type="text" id="writer" name="writer" class="form-control" value="${read.writer}" readonly="readonly" /><br />
-			</div>	
-			<div class="form-group">
-				<label class="control-label">작성 날짜</label>
-				<span><fmt:formatDate value="${read.regDate}" pattern="yyyy-MM-dd" /></span> 
-			</div>
-			<div class="form-group">
-				<button type="button" id="list_btn" class="btn btn-primary">목록</button>
-				<c:if test="${msg != 'hide_modity_delete_btn'}">
-					<button type="button" id="modity_btn" class="btn btn-warning">수정</button>
-					<button type="button" id="delete_btn" class="btn btn-danger">삭제</button>
-				</c:if>
+	
+		<div style = "border : solid 1px #dedede; background-color: #f5f5f5; padding: 5px; margin-bottom: 10px;">	   
+			<form role="form" method="post" autocomplete="off" style="margin: 0;">
+		    	
+		    	<input type="hidden" id="page" name="page" value="${scri.page}" readonly="readonly"/>
+		    	<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}" readonly="readonly"/>
+		    	<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}" readonly="readonly"/>
+		    	<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}" readonly="readonly"/>
+		    	
+		    	
+				<div class="form-group">
+					<label for="bno" class="control-label">글 번호</label>
+					<input type="text" id="bno" name="bno" class="form-control" value="${read.bno}" readonly="readonly" />
+				</div>
 				
-				<script>
-	   
-				// 폼을 변수에 저장
-				var formObj = $("form[role='form']");
-				
-				// 목록 버튼 클릭
-				$("#list_btn").click(function(){
-					self.location = "/board/listSearch?"
-							+ "page=${scri.page}&perPageNum=${scri.perPageNum}"
-							+ "&searchType=${scri.searchType}&keyword=${scri.keyword}";
-				});
-				
-				// 수정 버튼 클릭
-				$("#modity_btn").click(function(){
-				
-					formObj.attr("action", "/board/modify");
-					formObj.attr("method", "get");    
-					formObj.submit();       
+			</form>
+			     
+				<div class="form-group">
+					<label for="title" class="control-label">글 제목</label>
+					<input type="text" id="title" name="title" class="form-control" value="${read.title}" readonly="readonly" />
+				</div>
+				<div class="form-group">
+					<label for="content" class="control-label">글 내용</label>
+					<textarea id="content" name="content" class="form-control" readonly="readonly" >${read.content}</textarea>
+				</div>
+				<div class="form-group">
+					<label for="writer" class="control-label">작성자</label>
+					<input type="text" id="writer" name="writer" class="form-control" value="${read.writer}" readonly="readonly" /><br />
+				</div>	
+				<div class="form-group">
+					<label class="control-label">작성 날짜</label>
+					<span><fmt:formatDate value="${read.regDate}" pattern="yyyy-MM-dd" /></span> 
+				</div>
+				<div class="form-group">
+					<button type="button" id="list_btn" class="btn btn-primary">목록</button>
+					<c:if test="${msg != 'hide_modify_delete_btn'}">
+						<button type="button" id="modity_btn" class="btn btn-warning">수정</button>
+						<button type="button" id="delete_btn" class="btn btn-danger">삭제</button>
+					</c:if>
 					
-				});
-				
-				// 삭제 버튼 클릭
-				$("#delete_btn").click(function(){
-	
-					formObj.attr("action", "/board/delete");
-					formObj.attr("method", "get");    
-					formObj.submit();
-	
-				});
-				</script>
-				
+					<script>
+		   
+					// 폼을 변수에 저장
+					var formObj = $("form[role='form']");
+					
+					// 목록 버튼 클릭
+					$("#list_btn").click(function(){
+						self.location = "/board/listSearch?"
+								+ "page=${scri.page}&perPageNum=${scri.perPageNum}"
+								+ "&searchType=${scri.searchType}&keyword=${scri.keyword}";
+					});
+					
+					// 수정 버튼 클릭
+					$("#modity_btn").click(function(){
+					
+						formObj.attr("action", "/board/modify");
+						formObj.attr("method", "get");    
+						formObj.submit();       
+						
+					});
+					
+					// 삭제 버튼 클릭
+					$("#delete_btn").click(function(){
+		
+						formObj.attr("action", "/board/delete");
+						formObj.attr("method", "get");    
+						formObj.submit();
+		
+					});
+					</script>
+					
+				</div>
 			</div>
 			
 			<!-- 게시물 끝 -->
 			<div id="reply">
-				<ol class="replyList">
+				<div style="border : solid 1px #dedede; background-color: #f5f5f5; padding: 5px;">
+					댓글
+				</div>
+				<div class="replyList">
 					<c:forEach items="${repList}" var="repList">
-						<li>
+						<div style="border : solid 1px #dedede; background-color: #f5f5f5; padding: 5px;">
 							<p>
 							<span class="glyphicon glyphicon-user"></span>
-								작성자 : ${repList.writer}<br />
-								작성 날짜 :  <fmt:formatDate value="${repList.regDate}" pattern="yyyy-MM-dd" />
+								작성자: ${repList.writer}
+								(<fmt:formatDate value="${repList.regDate}" pattern="yyyy-MM-dd" />)
 							</p>
 							
-							<p>${repList.content}</p>
+							<p>내용: ${repList.content}</p>
 							
-							<p>                
+							<div class="form-group">          
 								<button type="button" class="replyUpdate btn btn-warning btn-xs" data-rno="${repList.rno}">수정</button>
 								<button type="button" class="replyDelete btn btn-danger btn-xs" data-rno="${repList.rno}">삭제</button>
 								
@@ -132,10 +137,10 @@
 											+ "&rno=" + $(this).attr("data-rno");   
 									});         
 								</script>
-							</p>
-						</li>
+							</div>
+						</div>
 					</c:forEach>   
-				</ol>
+				</div>
 				
 				<section class="replyForm">
 				<form role="form" method="post" autocomplete="off" class="form-horizontal">
@@ -186,5 +191,15 @@
 </div>
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<c:if test="${param.msg == 'replyWrite_error'}">	
+	<script>
+		alert('댓글 작성자와 댓글 내용을 입력해주세요.');
+	</script>
+</c:if>
+<c:if test="${param.msg == 'replyUpdate_error'}">
+	<script>
+		alert('댓글 내용을 입력해주세요.');
+	</script>
+</c:if>
 </body>
 </html>

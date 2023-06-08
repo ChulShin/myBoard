@@ -22,41 +22,42 @@
 		<%@include file="include/nav.jsp" %>
 	</nav>
 	<section id="container">
-	   
-		<form role="form" method="post" autocomplete="off">
-			<input type="hidden" id="bno" name="bno" value="${readReply.bno}" readonly="readonly" />
-			<input type="hidden" id="rno" name="rno" value="${readReply.rno}" readonly="readonly" /> 
-			
-			<input type="hidden" id="page" name="page" value="${scri.page}" readonly="readonly" />
-			<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}" readonly="readonly" />
-<%-- 			<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}" readonly="readonly" /> --%>
-<%-- 			<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}" readonly="readonly" /> --%>
-		   
-			<div class="form-group">
-				<label for="content" class="col-sm-2 control-label">글 내용</label>
-				<div class="col-sm-10">
-					<textarea id="content" name="content" class="form-control">${readReply.content}</textarea>
+		<div style="border : solid 1px #dedede; background-color: #f5f5f5; padding: 5px;">
+			<form role="form" method="post" autocomplete="off" style="margin: 10px;">
+				<input type="hidden" id="bno" name="bno" value="${readReply.bno}" readonly="readonly" />
+				<input type="hidden" id="rno" name="rno" value="${readReply.rno}" readonly="readonly" /> 
+				
+				<input type="hidden" id="page" name="page" value="${scri.page}" readonly="readonly" />
+				<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}" readonly="readonly" />
+	<%-- 			<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}" readonly="readonly" /> --%>
+	<%-- 			<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}" readonly="readonly" /> --%>
+			   
+				<div class="form-group">
+					<label for="content" class="col-sm-2 control-label">댓글 내용</label>
+					<div class="col-sm-10" style="margin-bottom: 16px;">
+						<textarea id="content" name="content" class="form-control">${readReply.content}</textarea>
+					</div>
 				</div>
-			</div>
-		   
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-warning">수정</button>
-					<button type="button" id="cancel_btn" class="btn btn-danger">취소</button>
-		    	</div>
-		    	
-				<script>
-				// 취소 버튼 클릭
-				$("#cancel_btn").click(function(){
-					self.location = "/board/read?bno=${readReply.bno}"
-					+ "&page=${scri.page}"
-					+ "&perPageNum=${scri.perPageNum}"
-					+ "&searchType=${scri.searchType}"
-					+ "&keyword=${scri.keyword}";
-				});
-				</script>
-			</div>
-		</form>
+			   
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-warning">수정</button>
+						<button type="button" id="cancel_btn" class="btn btn-danger">취소</button>
+			    	</div>
+			    	
+					<script>
+					// 취소 버튼 클릭
+					$("#cancel_btn").click(function(){
+						self.location = "/board/read?bno=${readReply.bno}"
+						+ "&page=${scri.page}"
+						+ "&perPageNum=${scri.perPageNum}"
+						+ "&searchType=${scri.searchType}"
+						+ "&keyword=${scri.keyword}";
+					});
+					</script>
+				</div>
+			</form>
+		</div>
 	</section>
 
 	<footer>

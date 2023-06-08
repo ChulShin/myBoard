@@ -2,6 +2,8 @@ package com.chuls.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
 public class ReplyVO {
 /*
 	bno			number				not null,
@@ -12,8 +14,13 @@ public class ReplyVO {
 */
 	private int bno;
 	private int rno;
+	
+	@NotBlank
 	private String content;
+	
+	@NotBlank
 	private String writer;
+	
 	private Date regDate;
 	
 	public int getBno() {
@@ -45,5 +52,10 @@ public class ReplyVO {
 	}
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+	@Override
+	public String toString() {
+		return "ReplyVO [bno=" + bno + ", rno=" + rno + ", content=" + content + ", writer=" + writer + ", regDate="
+				+ regDate + "]";
 	}
 }

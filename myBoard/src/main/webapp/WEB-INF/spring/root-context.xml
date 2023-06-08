@@ -14,17 +14,17 @@
 	<!-- dataSource 에서 db connection과 관련된 정보 분리 -->
 	<!-- util 태그의 id가 하기의 bean 태그에 사용된다! -->
 	<!-- class path 설정에 주의한다! -->
-	<util:properties id="dataSourceConfig" location="classpath:db-connection.properties"/>
+	<util:properties id="config" location="classpath:application-${spring.profiles.active}.properties"/>
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- 오라클 접속 -->
+	<!-- Database 접속 -->
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
-        <property value="#{dataSourceConfig['driverClassName']}" name="driverClassName"/>
-        <property value="#{dataSourceConfig['url']}" name="url"/>
-        <property value="#{dataSourceConfig['username']}" name="username"/>
-        <property value="#{dataSourceConfig['password']}" name="password"/>
+        <property value="#{config['DB.mariaDB.driverClassName']}" name="driverClassName"/>
+        <property value="#{config['DB.mariaDB.url']}" name="url"/>
+        <property value="#{config['DB.mariaDB.username']}" name="username"/>
+        <property value="#{config['DB.mariaDB.password']}" name="password"/>
     </bean>
-   
+	
     <!-- 마이바티스 연동 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
          <property name="dataSource" ref="dataSource"></property>
@@ -39,5 +39,6 @@
 	<context:component-scan base-package="com.chuls.domain" />
 	<context:component-scan base-package="com.chuls.persistence" />
 	<context:component-scan base-package="com.chuls.service" />
+	<context:component-scan base-package="com.chuls.config"/>
     
 </beans>

@@ -69,9 +69,9 @@
 	
 	<c:if test="${member != null}">
 		
-		<a href="/member/myPage" class="btn btn-primary">마이페이지</a>
-		<a href="/member/modify" class="btn btn-primary">회원정보 수정</a>
-		<a href="/member/withdrawal" class="btn btn-primary">회원탈퇴</a>
+		<a href="/member/myPage" class="btn btn-primary" style="margin-left: 5px;">마이페이지</a>
+		<a href="/member/modify" class="btn btn-primary" style="margin-left: 5px;">회원정보 수정</a>
+		<a href="/member/withdrawal" class="btn btn-primary" style="margin-left: 5px;">회원탈퇴</a>
 		
 	</c:if>
 </div>
@@ -85,6 +85,21 @@
 <c:if test="${msg == 'register_error'}">
 	<script>
 		alert('회원가입에 실패했습니다.');
+	</script>
+</c:if>
+<c:if test="${msg == 'POST_write_error'}">
+	<script>
+		alert('비정상적인 접근입니다.');
+	</script>
+</c:if>
+<c:if test="${msg == 'modifyPOST_success'}">
+	<script>
+		alert('회원정보 수정이 완료됐습니다.');
+	</script>
+</c:if>
+<c:if test="${msg == 'withdrawalPOST_success'}">
+	<script>
+		alert('회원탈퇴가 완료됐습니다.');
 	</script>
 </c:if>
 </body>

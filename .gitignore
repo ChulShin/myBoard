@@ -3,6 +3,11 @@
 
 ### DB ###
 db-connection.properties
+application-local.yml
+application-local.properties
+application-dev.properties
+application-prod.properties
+application.properties
 
 ### Eclipse ###
 .metadata

@@ -64,7 +64,14 @@
 		</div>
 		<div class="input-form-box">
 			<label for="photo" class="col-sm-2 col-form-label">프로필 사진</label>
-			<img id="photo" src="http://localhost:8080/temp/${member.fileName}" class="img-fluid rounded" alt="My image" style="max-width: 50%; height: auto;"/>
+			<c:choose>
+				<c:when test="${profile eq 'local'}">
+					<img id="photo" src="http://localhost:8080/temp/${member.fileName}" class="img-fluid rounded" alt="My image" style="max-width: 50%; height: auto;"/>
+				</c:when>
+				<c:when test="${profile eq 'prod'}">
+					<img id="photo" src="${imgPath}" class="img-fluid rounded" alt="My image" style="max-width: 50%; height: auto;"/>
+				</c:when>
+			</c:choose>
 		</div>
 		<div class="form-group col-sm-5 d-flex justify-content-between">
 			<%-- <button type="submit" class="btn btn-primary">회원정보 수정</button> --%>

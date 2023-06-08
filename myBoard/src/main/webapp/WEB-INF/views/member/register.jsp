@@ -106,7 +106,7 @@
 				<label for="photo" class="form-label">프로필 사진</label>
 			</div>
 			<div class="col-sm-3">
-				<input type="file" id="photo" name="photo" class="form-control" required />
+				<input type="file" id="photo" name="photo" class="form-control" required/>
 			</div>
 		</div>
 		<div class="form-group col-sm-5 d-flex justify-content-between">

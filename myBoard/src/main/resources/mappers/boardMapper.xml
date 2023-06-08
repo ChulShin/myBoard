@@ -7,9 +7,16 @@
 	<!-- 작성 -->
 	<insert id="write">
 	 	insert into myBoard(bno, title, content, writer)
-			values (myBoard_seq.nextval, #{title}, #{content}, #{writer})
+			values (nextval(myBoard_seq), #{title}, #{content}, #{writer})
 	</insert>
- 
+	
+	<!-- 가장 최근 작성된 게시물 -->
+	<select id="lastBno" resultType="com.chuls.domain.BoardVO">
+		select bno, title, content, writer, regDate, viewCnt from myBoard
+			where bno = (
+				select max(bno) from myBoard
+			)
+ 	</select>
 	<!-- 조회 -->
 	<select id="read" resultType="com.chuls.domain.BoardVO">
 		 select bno, title, content, writer, regDate, viewCnt
@@ -74,13 +81,33 @@
 			order by bno desc
 	</select>
 	
+<!-- 	search query for oracle start-->
+<!-- 	<sql id="search"> -->
+<!-- 		<if test="searchType != ''.toString()"> -->
+<!-- 			<if test="searchType == 't'.toString()">where title like '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'c'.toString()">where content like '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'w'.toString()">where writer like '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'tc'.toString()">where (title like '%' || #{keyword} || '%')  -->
+<!-- 														or (content like '%' || #{keyword} || '%')</if> -->
+<!--    			<![CDATA[ -->
+<!--    				and bno > 0 -->
+<!--    			]]> -->
+<!-- 		</if> -->
+<!-- 		<if test="searchType == ''.toString()"> -->
+<!-- 			<![CDATA[ -->
+<!-- 	   			where bno > 0 -->
+<!-- 			]]> -->
+<!-- 		</if> -->
+<!-- 	</sql> -->
+<!-- 	search query for oracle end-->
+	
+<!-- 	search query for mariaDB start -->
 	<sql id="search">
 		<if test="searchType != ''.toString()">
-			<if test="searchType == 't'.toString()">where title like '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">where content like '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">where writer like '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">where (title like '%' || #{keyword} || '%') 
-														or (content like '%' || #{keyword} || '%')</if>
+			<if test="searchType == 't'.toString()">where title like concat('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c'.toString()">where content like concat('%', #{keyword}, '%')</if>
+			<if test="searchType == 'w'.toString()">where writer like concat('%', #{keyword}, '%')</if>
+			<if test="searchType == 'tc'.toString()">where (title concat('%', #{keyword}, '%')) or (content concat('%', #{keyword}, '%'))</if>
    			<![CDATA[
    				and bno > 0
    			]]>
@@ -91,6 +118,7 @@
 			]]>
 		</if>
 	</sql>
+<!-- 	search query for mariaDB end -->
 	
 	<select id="countSearch" resultType="int">
 		select count(bno)

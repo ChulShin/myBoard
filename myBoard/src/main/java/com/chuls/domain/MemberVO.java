@@ -2,6 +2,9 @@ package com.chuls.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
@@ -17,15 +20,32 @@ public class MemberVO {
 	fileName		varchar2(100),
 	photo,
 */
+	@NotBlank
 	private String userId;
+	
+	@NotBlank
 	private String userPass;
+	
+	@NotBlank
 	private String userName;
+	
 	private Date regDate;
+	
+	@NotBlank
 	private String phoneNum;
+	
+	@NotBlank
 	private String address;
+	
+	@NotBlank
 	private String address_detail;
+	
+	@NotBlank
 	private String intro;
+	
 	private String fileName;
+	
+	@NotNull
 	private MultipartFile photo;
 	
 	public String getUserId() {

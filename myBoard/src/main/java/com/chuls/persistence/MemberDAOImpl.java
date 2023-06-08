@@ -26,7 +26,6 @@ public class MemberDAOImpl implements MemberDAO{
 	// 로그인
 	@Override
 	public MemberVO login(MemberVO vo) throws Exception {
-		//return sql.selectOne(namespace + ".login", vo);
 		return sql.selectOne(namespace + ".loginBcrypt", vo);
 	}
 
@@ -52,5 +51,11 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public MemberVO userNameCheck(String userName) throws Exception {
 		return sql.selectOne(namespace + ".userNameCheck", userName);
+	}
+
+	// 비밀번호 확인
+	@Override
+	public MemberVO userPassCheck(String userId) throws Exception {
+		return sql.selectOne(namespace + ".userPassCheck", userId);
 	}
 }

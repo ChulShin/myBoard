@@ -16,7 +16,7 @@
 	<insert id="writeReply">
 		insert into
 			myReply(bno, rno, content, writer)
-		values(#{bno}, myReply_seq.nextval, #{content}, #{writer})
+		values(#{bno}, nextval(myReply_seq), #{content}, #{writer})
 	</insert>
 
 	<!-- 특정 댓글 조회 -->

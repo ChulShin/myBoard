@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,12 +51,18 @@ public class BoardController {
 	
 	// 글 작성 post
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String postWrite(BoardVO vo) throws Exception {
+	public String postWrite(BoardVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
 		logger.info("post write");
-		    
+		
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if(member == null || !member.getUserName().equals(vo.getWriter())) {
+			rttr.addFlashAttribute("msg", "POST_write_error");
+			return "redirect:/";
+		}
+		
 		service.write(vo);
-		    
-		return "redirect:/";
+		rttr.addAttribute("bno", service.lastBoard().getBno());
+		return "redirect:/board/read";
 	}
 	
 	// 글 목록
@@ -78,7 +85,7 @@ public class BoardController {
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		
 		if(member == null || !member.getUserName().equals(vo.getWriter())){
-			model.addAttribute("msg", "hide_modity_delete_btn");
+			model.addAttribute("msg", "hide_modify_delete_btn");
 		}
 		model.addAttribute("read", vo);
 		model.addAttribute("scri", scri);
@@ -223,14 +230,19 @@ public class BoardController {
 	@RequestMapping(value = "/replyWrite", method = RequestMethod.POST)
 	public String replyWrite(ReplyVO vo, SearchCriteria scri, RedirectAttributes rttr) throws Exception {
 		logger.info("reply write");
-
-		RepService.writeReply(vo);
-
+		
 		rttr.addAttribute("bno", vo.getBno());
 		rttr.addAttribute("page", scri.getPage());
 		rttr.addAttribute("perPageNum", scri.getPerPageNum());
 		rttr.addAttribute("searchType", scri.getSearchType());
 		rttr.addAttribute("keyword", scri.getKeyword());
+
+		if(vo.getWriter() == null || vo.getWriter().trim().isEmpty() || vo.getContent() == null || vo.getContent().trim().isEmpty()) {
+			rttr.addAttribute("msg", "replyWrite_error");
+			return "redirect:/board/read";
+		}
+		
+		RepService.writeReply(vo);
 
 		return "redirect:/board/read";
 	}
@@ -240,13 +252,18 @@ public class BoardController {
 	public String replyUpdate(ReplyVO vo, SearchCriteria scri, RedirectAttributes rttr) throws Exception {
 		logger.info("reply update");
 		
-		RepService.replyUpdate(vo);
-
 		rttr.addAttribute("bno", vo.getBno());
 		rttr.addAttribute("page", scri.getPage());
 		rttr.addAttribute("perPageNum", scri.getPerPageNum());
 		rttr.addAttribute("searchType", scri.getSearchType());
 		rttr.addAttribute("keyword", scri.getKeyword());
+
+		if(vo.getContent() == null || vo.getContent().trim().isEmpty()) {
+			rttr.addAttribute("msg", "replyUpdate_error");
+			return "redirect:/board/read";
+		}
+		
+		RepService.replyUpdate(vo);
 
 		return "redirect:/board/read";
 	}

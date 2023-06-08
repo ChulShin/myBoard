@@ -24,6 +24,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public void write(BoardVO vo) throws Exception {
 		sql.insert(namespace + ".write", vo);
 	}
+
+	// 가장 최근 작성된 게시물
+	@Override
+	public BoardVO lastBoard() throws Exception {
+		return sql.selectOne(namespace + ".lastBno");
+	}
 	
 	// 조회
 	@Override

@@ -22,28 +22,30 @@
 		<%@include file="board/include/header.jsp" %>
 	</header>
 	
-	<ul class="nav nav-pills">
+	<%@include file="board/include/nav.jsp" %>
+	
+<!-- 	<ul class="nav nav-pills"> -->
 		<%-- <li><a href="/board/list">글 목록</a></li>
 		<li><a href="/board/listPage">글 목록+페이지</a></li> --%>
-		<li><a href="/board/listSearch" class="btn btn-dark" style="margin: 5px">글 목록</a></li>
-		<c:if test="${member != null}">
-			<li><a href="/board/write" class="btn btn-dark" style="margin: 5px">글 작성</a></li>
-			<li><a href="/member/logout" class="btn btn-dark" style="margin: 5px">로그아웃</a></li>
-		</c:if>
-	</ul>
+<!-- 		<li><a href="/board/listSearch" class="btn btn-dark" style="margin: 5px">글 목록</a></li> -->
+<%-- 		<c:if test="${member != null}"> --%>
+<!-- 			<li><a href="/board/write" class="btn btn-dark" style="margin: 5px">글 작성</a></li> -->
+<!-- 			<li><a href="/member/logout" class="btn btn-dark" style="margin: 5px">로그아웃</a></li> -->
+<%-- 		</c:if> --%>
+<!-- 	</ul> -->
 	
 	<c:if test="${member == null}">
 	<form role="form" method="post" autocomplete="off" action="/member/login">
 		<div class="input-form-box">
 			<label for="userId" class="col-sm-2 col-form-label">아이디</label>
 			<div class="col-sm-3">
-				<input type="text" id="userId" name="userId" class="form-control" />
+				<input type="text" id="userId" name="userId" class="form-control"/>
 			</div>
 		</div>
 		<div class="input-form-box">
 			<label for="userPass" class="col-sm-2 col-form-label">패스워드</label>
 			<div class="col-sm-3">
-				<input type="password" id="userPass" name="userPass" class="form-control" />
+				<input type="password" id="userPass" name="userPass" class="form-control"/>
 			</div>
 		</div>
 		<div class="form-group col-sm-5 d-flex justify-content-between">
@@ -85,11 +87,6 @@
 <c:if test="${msg == 'register_error'}">
 	<script>
 		alert('회원가입에 실패했습니다.');
-	</script>
-</c:if>
-<c:if test="${msg == 'POST_write_error'}">
-	<script>
-		alert('비정상적인 접근입니다.');
 	</script>
 </c:if>
 <c:if test="${msg == 'modifyPOST_success'}">

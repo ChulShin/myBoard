@@ -35,7 +35,7 @@
 				<div class="form-group">
 					<label for="content" class="col-sm-2 control-label">댓글 내용</label>
 					<div class="col-sm-10" style="margin-bottom: 16px;">
-						<textarea id="content" name="content" class="form-control">${readReply.content}</textarea>
+						<textarea id="content" name="content" class="form-control" required="required">${readReply.content}</textarea>
 					</div>
 				</div>
 			   

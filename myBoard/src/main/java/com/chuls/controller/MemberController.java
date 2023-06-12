@@ -152,7 +152,15 @@ public class MemberController {
 	public String login(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		logger.info("post login");
 
-		String encodedPassword = service.userPassCheck(vo.getUserId()).getUserPass();
+		String inputUserId = vo.getUserId();
+		String inputUserPass = vo.getUserPass();
+		if(inputUserId == null || inputUserId.trim().isEmpty() || inputUserPass == null || inputUserPass.trim().isEmpty() 
+				|| service.userPassCheck(inputUserId) == null || service.userPassCheck(inputUserId).getUserPass() == null
+				|| service.userPassCheck(inputUserId).getUserPass().trim().isEmpty()) {
+			rttr.addFlashAttribute("msg", "login_error");
+			return "redirect:/";
+		}
+		String encodedPassword = service.userPassCheck(inputUserId).getUserPass();
 		String rawPassword = vo.getUserPass();
 		
 		HttpSession session = req.getSession();

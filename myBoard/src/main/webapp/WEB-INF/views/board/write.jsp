@@ -62,7 +62,7 @@
 	<c:if test="${member == null}">
 		<p>로그인을 하셔야 글을 작성할 수 있습니다.</p>
 		
-		<p><a href="/" class="btn btn-primary">홈으로</a></p>
+		<p><a href="/" class="btn btn-primary">처음으로</a></p>
 	</c:if>
 
 	</section>

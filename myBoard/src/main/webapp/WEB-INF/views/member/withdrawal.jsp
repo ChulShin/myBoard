@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="input-form-box">
-			<label for="userPass" class="col-sm-2 col-form-label">패스워드</label>
+			<label for="userPass" class="col-sm-2 col-form-label">패스워드 확인</label>
 			<div class="col-sm-3">
 				<input type="password" id="userPass" name="userPass" class="form-control" />
 			</div>

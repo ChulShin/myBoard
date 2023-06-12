@@ -114,7 +114,7 @@
 							
 							<p>내용: ${repList.content}</p>
 							
-							<div class="form-group">          
+							<div class="form-group">
 								<button type="button" class="replyUpdate btn btn-warning btn-xs" data-rno="${repList.rno}">수정</button>
 								<button type="button" class="replyDelete btn btn-danger btn-xs" data-rno="${repList.rno}">삭제</button>
 								
@@ -143,7 +143,7 @@
 				</div>
 				
 				<section class="replyForm">
-				<form role="form" method="post" autocomplete="off" class="form-horizontal">
+				<form role="form" method="post" action="replyWrite" autocomplete="off" class="form-horizontal">
 				
 					<input type="hidden" id="bno" name="bno" value="${read.bno}" readonly="readonly" />
 					<input type="hidden" id="page" name="page" value="${scri.page}" readonly="readonly" />
@@ -154,29 +154,21 @@
 					<div class="form-group write-comment">
 						<label for="writer" class="col-sm-2 control-label">작성자</label>
 						<div class="col-sm-10">
-							<input type="text" id="writer" name="writer" class="form-control" />
+							<input type="text" id="writer" name="writer" class="form-control" required="required"/>
 						</div>
 					</div>
 					
 					<div class="form-group write-comment">
 						<label for="content" class="col-sm-2 control-label">댓글 내용</label>
 						<div class="col-sm-10">
-							<textarea id="content" name="content" class="form-control"></textarea>
+							<textarea id="content" name="content" class="form-control" required="required"></textarea>
 						</div>
 					</div>
 					
 					<div class="form-group write-comment">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="button" class="repSubmit btn btn-success">작성</button>
+							<button type="submit" class="repSubmit btn btn-success">작성</button>
 						</div>
-						<script>
-						var formObj = $(".replyForm form[role='form']");
-						          
-						$(".repSubmit").click(function(){
-							formObj.attr("action", "replyWrite");
-							formObj.submit();
-						});
-						</script>
 				   </div>
 				</form>
 				</section>

@@ -56,8 +56,13 @@ public class BoardController {
 		
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		if(member == null || !member.getUserName().equals(vo.getWriter())) {
-			rttr.addFlashAttribute("msg", "POST_write_error");
-			return "redirect:/";
+			rttr.addFlashAttribute("msg", "POST_write_error1");
+			return "redirect:/board/listSearch";
+		}
+		
+		if(vo.getTitle() == null || vo.getTitle().trim().isEmpty() || vo.getContent() == null || vo.getContent().trim().isEmpty()) {
+			rttr.addFlashAttribute("msg", "POST_write_error2");
+			return "redirect:/board/listSearch";
 		}
 		
 		service.write(vo);
@@ -148,21 +153,29 @@ public class BoardController {
 	public String postModify(BoardVO vo,
 				@ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr, HttpSession session, Model model) throws Exception {
 		logger.info("post modify");
+
+		rttr.addAttribute("page", scri.getPage());
+		rttr.addAttribute("perPageNum", scri.getPerPageNum());
+		rttr.addAttribute("searchType", scri.getSearchType());
+		rttr.addAttribute("keyword", scri.getKeyword());
+		
+		if(vo.getTitle() == null || vo.getTitle().trim().isEmpty() || vo.getContent() == null || vo.getContent().trim().isEmpty()) {
+			rttr.addFlashAttribute("msg", "modify_error1");
+			return "redirect:/board/listSearch";
+		}
+		
+
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		BoardVO writerCheck = service.read(vo.getBno());
 		
 		String writer = writerCheck.getWriter();
 		String userName = member.getUserName();
 		
-		if(userName.equals(writer)) {
+		if(writer != null && userName != null && userName.equals(writer) && writer.equals(vo.getWriter())) {
 			service.update(vo);
 		} else {
 			rttr.addFlashAttribute("msg", "modify_error");
 		}
-		rttr.addAttribute("page", scri.getPage());
-		rttr.addAttribute("perPageNum", scri.getPerPageNum());
-		rttr.addAttribute("searchType", scri.getSearchType());
-		rttr.addAttribute("keyword", scri.getKeyword());
 		
 		return "redirect:/board/listSearch";
 	}

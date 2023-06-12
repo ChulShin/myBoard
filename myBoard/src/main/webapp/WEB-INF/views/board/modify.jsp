@@ -32,20 +32,20 @@
 	    
 			<div class="form-group">
 				<label for="bno" class="control-label">글 번호</label>
-				<input type="text" id="bno" name="bno" class="form-control" value="${modify.bno}" readonly="readonly" />
+				<input type="text" id="bno" name="bno" class="form-control" value="${modify.bno}" readonly="readonly" required="required"/>
 			</div>
 		     
 			<div class="form-group">
 				<label for="title" class="control-label">글 제목</label>
-				<input type="text" id="title" name="title" class="form-control" value="${modify.title}" />
+				<input type="text" id="title" name="title" class="form-control" value="${modify.title}" required="required"/>
 			</div>
 			<div class="form-group">
 				<label for="content" class="control-label">글 내용</label>
-				<textarea id="content" name="content" class="form-control">${modify.content}</textarea>
+				<textarea id="content" name="content" class="form-control" required="required">${modify.content}</textarea>
 			</div>
 			<div class="form-group">
 				<label for="writer" class="control-label">작성자</label>
-				<input type="text" id="writer" name="writer" class="form-control" value="${modify.writer}" readonly="readonly" /><br />
+				<input type="text" id="writer" name="writer" class="form-control" value="${modify.writer}" readonly="readonly" required="required"/><br />
 				<label class="control-label">작성 날짜</label>
 				<fmt:formatDate value="${modify.regDate}" pattern="yyyy-MM-dd" /> 
 			</div>	

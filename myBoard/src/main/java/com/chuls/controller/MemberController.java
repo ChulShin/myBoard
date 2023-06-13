@@ -256,6 +256,13 @@ public class MemberController {
 	public String postModify(HttpSession session, MemberVO vo, RedirectAttributes rttr) throws Exception{
 		logger.info("post modify");
 		
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		
+		if(!member.getUserId().equals(vo.getUserId()) || vo.getUserPass() == null || vo.getUserPass().trim().isEmpty()) {
+			rttr.addFlashAttribute("msg", "modifyPOST_error");
+			return "redirect:/member/modify";
+		}
+		
 		String inputPass = vo.getUserPass();
 		String pass = passEncoder.encode(inputPass);
 		vo.setUserPass(pass);

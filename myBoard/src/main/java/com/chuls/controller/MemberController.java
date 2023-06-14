@@ -294,13 +294,18 @@ public class MemberController {
 		MemberVO member = (MemberVO) session.getAttribute("member");
 
 		String userId = member.getUserId();
+		if(!vo.getUserId().equals(userId)) {
+			rttr.addFlashAttribute("msg", "withdrawal_error_diffrent_ID");
+			return "redirect:/member/withdrawal";
+		}
+		
 		String oldPass = service.userPassCheck(userId).getUserPass();
 		String newPass = vo.getUserPass();
 
 		boolean passMatch = passEncoder.matches(newPass, oldPass);
 		
 		if (!(passMatch)) {
-			rttr.addFlashAttribute("msg", false);
+			rttr.addFlashAttribute("msg", "withdrawal_error_diffrent_PW");
 			return "redirect:/member/withdrawal";
 		}
 

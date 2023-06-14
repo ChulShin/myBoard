@@ -38,7 +38,7 @@
 		</div>
 	
 	</form>
-	<c:if test="${msg == false}">
+	<c:if test="${msg == 'withdrawal_error_diffrent_PW'}">
 		<p id="wrong-password" style="color: red">입력한 비밀번호가 잘못되었습니다.</p>
 	</c:if>
 </div>
@@ -47,5 +47,10 @@
 		$("#wrong-password").attr("style", "display:none;");
 	});
 </script>
+<c:if test="${msg == 'withdrawal_error_diffrent_ID'}">
+	<script>
+		alert('비정상적인 접근입니다.');
+	</script>
+</c:if>
 </body>
 </html>

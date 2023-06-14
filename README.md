@@ -12,8 +12,8 @@ Spring + JSP _ 게시판 사이트
 ### ⚙️ 개발 환경
 - **Language** : Java 8
 - **IDE** : STS
-- **Framework** : Spring Framework(4.3.8)
-- **Database** : MariaDB(10.6.10)
+- **Framework** : Spring Framework (4.3.8)
+- **Database** : MariaDB (10.6.10)
 - **ORM** : Mybatis
 
 ## 📌 기능 구현
@@ -31,6 +31,7 @@ Spring + JSP _ 게시판 사이트
 #### 마이 페이지
 - AWS S3 프로필 사진 파일 보여주기
 #### 회원정보 수정
+- 아이디, 새로운 패스워드 유효성 검사
 #### 회원탈퇴
 #### 글 목록
 - Pagination 구현

@@ -1,4 +1,4 @@
-# myBoard
+# Spring Board
 Spring + JSP _ 게시판 사이트
 
 
